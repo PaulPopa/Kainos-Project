@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import model.Assignment;
 import model.Department;
 import model.Employee;
 import model.Project;
@@ -28,4 +29,11 @@ public interface EmployeesMapper {
 	
 	@Insert("INSERT INTO project VALUES (#{projectId}, #{projectName}, #{leaderId})")
 	void insertProject(Project project);
+	
+	@Insert("INSERT INTO assignment VALUES(#{employeeId}, #{projectId}, #{startDate}, #{endDate})")
+	void insertAssignment(Assignment assignment);
+	
+    @Select("SELECT GROUP_CONCAT(CONCAT_WS(' ', employee.f_name, employee.l_name) SEPARATOR ';') from project, employee, assignment where project.project_id = assignment.project_id and employee.employee_id = assignment.employee_id and project.project_id = #{project_id} group by project.project_id")
+    String getEmployeesInProject(@Param("project_id") int projectId);
+
 }

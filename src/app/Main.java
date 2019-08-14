@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import data.EmployeesMapper;
+import display.TalentManager;
 import login.Login;
 import model.Employee;
 import model.User;
@@ -40,16 +41,25 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Input the name of the department that you would like to get the employees from.");
+			
+			TalentManager tm = new TalentManager(mapper, sc, session);
+			tm.selectEmployeesForProject();
+			System.exit(1);
+			
+			
+			
+			
+			
+			//System.out.println("Input the name of the department that you would like to get the employees from.");
 			
 //			Login login = new Login(mapper, sc);
 //			login.verifyLogin();
 			
-			String d_name = sc.nextLine();
-			List<Employee> employees = mapper.getDepartmentEmployees(d_name);
-			for(Employee emp : employees) {
-				System.out.println(emp.getF_name());
-			}
+			//String d_name = sc.nextLine();
+			//List<Employee> employees = mapper.getDepartmentEmployees(d_name);
+			//for(Employee emp : employees) {
+			//	System.out.println(emp.getF_name());
+			//}
 			//Login login = new Login(mapper, sc);
 			//login.verifyLogin();
 			System.out.println("Welcome to the Diamond Database for entering a new employee\n");
