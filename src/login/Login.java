@@ -33,8 +33,6 @@ public class Login {
 				user = mapper.getUser(username);
 			} 
 			if (!hashPassword.contentEquals(user.getPassword())) {
-				System.out.println(hashPassword);
-				System.out.println(user.getPassword());
 				System.err.println("Incorrect credentials");
 				System.out.println("Enter your password:");
 				password = sc.nextLine();
