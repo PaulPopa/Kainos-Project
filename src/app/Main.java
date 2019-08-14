@@ -2,7 +2,10 @@ package app;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.security.*;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -10,7 +13,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import data.EmployeesMapper;
+import login.Login;
 import model.Employee;
+import model.User;
 
 public class Main {
 
@@ -33,6 +38,10 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
+			
+			Login login = new Login(mapper, sc);
+			login.verifyLogin();
+			
 			System.out.println("Please input your new employee id\n"); 
 			String emp_id = sc.nextLine();
 			System.out.println("Please input the address\n"); 
