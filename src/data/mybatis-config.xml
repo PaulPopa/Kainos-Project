@@ -16,6 +16,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper class="data.WorldMapper"/>
+    <mapper class="data.EmployeesMapper"/>
   </mappers>
 </configuration>
