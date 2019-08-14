@@ -19,6 +19,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import data.EmployeesMapper;
 import display.TalentManager;
 import login.Login;
+import model.Department;
 import model.Employee;
 import model.User;
 
@@ -84,6 +85,10 @@ public class Main {
 			
 			String nin = enterNin(sc);
 			
+			Department department = enterDept(sc);
+			
+			convertEmptyToNull(bank_account, sort_code, start_sal, salary, nin);
+			
 			System.out.println("Adding this employee to database: \n"); 
 
 			System.out.println(emp_id + " " + address + " " + email + " " + bank_account + " " + sort_code + " " + start_sal + " " + f_name + " " + l_name + " " + salary + " " + nin);
@@ -98,6 +103,24 @@ public class Main {
 		} finally {
 			session.close();
 		}
+	}
+	private static Department enterDept(Scanner sc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	private static void convertEmptyToNull(String bank_account, String sort_code, Double start_sal, Double salary,
+			String nin) {
+		if(bank_account == "")
+			bank_account = null;
+		if(sort_code == "")
+			sort_code = null;
+		if(start_sal == 0)
+			start_sal = null;
+		if(salary == 0)
+			salary = null;
+		if(nin == "")
+			nin = null;
+		
 	}
 	private static String enterNin(Scanner sc) {
 		String nin;
@@ -119,7 +142,9 @@ public class Main {
 			if (con) System.out.println("Invalid input. Please enter current salary again\n"); 
 			sal = sc.nextLine(); 
 			con = true;
-		} while (sal.matches(".*[a-zA-Z]+.*"));
+			if (sal.isEmpty())
+					sal = "0";
+		} while (sal.matches(".*[a-zA-Z]+.*") || Double.parseDouble(sal) < 0);
 		return Double.parseDouble(sal);
 	}
 
@@ -136,7 +161,7 @@ public class Main {
 			}
 			name = sc.nextLine(); 
 			con = true;
-		} while (name.matches(".*[0-9]+.*") && name.length() > 50);
+		} while (name.matches(".*[0-9]+.*") || name.length() > 50);
 		return name;
 	}
 
@@ -148,7 +173,9 @@ public class Main {
 			if (con) System.out.println("Invalid input. Please enter starting salary again\n"); 
 			startsal = sc.nextLine(); 
 			con = true;
-		} while (startsal.matches(".*[a-zA-Z]+.*"));
+			if (startsal.isEmpty())
+				startsal = "0";
+		} while (startsal.matches(".*[a-zA-Z]+.*") || Double.parseDouble(startsal) < 0);
 		return Double.parseDouble(startsal);
 	}
 
@@ -161,7 +188,7 @@ public class Main {
 			sortcode = sc.nextLine(); 
 			sortcode = sortcode.replace("-", "");
 			con = true;
-		} while (sortcode.length() != 6 && sortcode.matches(".*[a-zA-Z]+.*"));
+		} while (sortcode.length() != 6 || sortcode.matches(".*[a-zA-Z]+.*"));
 		return sortcode;
 	}
 
