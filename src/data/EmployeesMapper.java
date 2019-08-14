@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import model.Department;
 import model.Employee;
+import model.Project;
 import model.User;
 
 public interface EmployeesMapper {
@@ -24,4 +25,7 @@ public interface EmployeesMapper {
 	
 	@Select("SELECT username, password FROM user WHERE username = #{username}")
 	User getUser(@Param("username") String username);
+	
+	@Insert("INSERT INTO project VALUES (#{projectId}, #{projectName}, #{leaderId})")
+	void insertProject(Project project);
 }
