@@ -47,7 +47,7 @@ public class Main {
 			Boolean validInput = true;
 			String department;
 			do {
-				System.out.println("Welcome to the Diamond Database\n" + "What department are you in?");
+				System.out.println("Welcome to the Diamond Database\n" + "What department are you in?" + " Please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
 				department = sc.nextLine();
 				switch (department) {
 				case "HR":
@@ -89,7 +89,7 @@ public class Main {
 								+"4.Select all projects with no employees assigned\n"
 								+"5.Select all employees with no assigned projects\n"
 								+"6.Select the number of employees per specified project\n"
-								+ "Enter 1, 2, 3, 4, 5, 6\n");
+								+ "Enter 1, 2, 3, 4, 5, 6 or exit\n");
 						String talent_choice = sc.nextLine();
 						switch(talent_choice) {
 						  case "1": tm.createProjects();
