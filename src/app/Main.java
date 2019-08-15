@@ -61,6 +61,15 @@ public class Main {
 			//for(Employee emp : employees) {
 			//	System.out.println(emp.getF_name());
 			//}
+//			Login login = new Login(mapper, sc);
+//			login.verifyLogin();
+			/*
+			String d_name = sc.nextLine();
+			List<Employee> employees = mapper.getDepartmentEmployees(d_name);
+			for(Employee emp : employees) {
+				System.out.println(emp.getF_name());
+			}*/
+			
 			//Login login = new Login(mapper, sc);
 			//login.verifyLogin();
 			System.out.println("Welcome to the Diamond Database for entering a new employee\n");
@@ -85,16 +94,16 @@ public class Main {
 			
 			String nin = enterNin(sc);
 			
-			Department department = enterDept(sc);
+			String department = enterDept(sc);
 			
 			convertEmptyToNull(bank_account, sort_code, start_sal, salary, nin);
 			
 			System.out.println("Adding this employee to database: \n"); 
 
-			System.out.println(emp_id + " " + address + " " + email + " " + bank_account + " " + sort_code + " " + start_sal + " " + f_name + " " + l_name + " " + salary + " " + nin);
+			System.out.println(emp_id + " " + address + " " + email + " " + bank_account + " " + sort_code + " " + start_sal + " " + f_name + " " + l_name + " " + salary + " " + nin + " " + department);
 			//String yes = sc.nextLine();
 			//if (yes == "yes") {
-			Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin);
+			Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin, department);
 			mapper.insertEmployee(e);
 			session.commit();
 			System.out.println("Employee added");
@@ -104,9 +113,30 @@ public class Main {
 			session.close();
 		}
 	}
-	private static Department enterDept(Scanner sc) {
-		// TODO Auto-generated method stub
-		return null;
+	private static String enterDept(Scanner sc) {
+		System.out.println("Input the name of the department that you would like to get the employees from (sales | technology)");
+		String deptstr;
+		String deptId = "fakedept";
+		boolean con = false;
+		boolean deptExist = false;
+		do {
+			if (con) System.out.println("Please enter a valid department name");
+			deptstr = sc.nextLine();
+			switch(deptstr) 
+			{
+			case "sales": 
+				deptId = "SALE";
+				deptExist = true;
+				break;
+			case "techology": 
+				deptId = "TECH";
+				deptExist = true;
+				break;
+			} 
+			con = true;
+		} while(!deptExist);
+		
+		return deptId;
 	}
 	private static void convertEmptyToNull(String bank_account, String sort_code, Double start_sal, Double salary,
 			String nin) {
@@ -125,12 +155,12 @@ public class Main {
 	private static String enterNin(Scanner sc) {
 		String nin;
 		boolean con = false;
-		System.out.println("Please input your employee's National Insurance Number (can be skipped and added later\n"); 
+		System.out.println("Please input your employee's National Insurance Number (can be skipped and added later)\n"); 
 		do {
 			if (con) System.out.println("Invalid input. Please input National Insurance Number again (must be correctly formated)\n"); 
 			nin = sc.nextLine(); 
 			con = true;
-		} while (!nin.matches("^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{0,1}$"));
+		} while (!nin.matches("^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{0,1}$") && nin.length() != 0);
 		return nin;
 	}
 
@@ -161,7 +191,7 @@ public class Main {
 			}
 			name = sc.nextLine(); 
 			con = true;
-		} while (name.matches(".*[0-9]+.*") || name.length() > 50);
+		} while (name.matches(".*[0-9]+.*") || (name.length() > 50) || (name.isEmpty()));
 		return name;
 	}
 
@@ -188,7 +218,7 @@ public class Main {
 			sortcode = sc.nextLine(); 
 			sortcode = sortcode.replace("-", "");
 			con = true;
-		} while (sortcode.length() != 6 || sortcode.matches(".*[a-zA-Z]+.*"));
+		} while ((sortcode.length() != 6 || sortcode.length() != 0) && sortcode.matches(".*[a-zA-Z]+.*"));
 		return sortcode;
 	}
 
@@ -224,7 +254,7 @@ public class Main {
 			if (con) System.out.println("Invalid input. Please enter address again (must be less than 50 characters)\n"); 
 			addr = sc.nextLine(); 
 			con = true;
-		} while (addr.length() > 50);
+		} while (addr.length() > 50 || addr.isEmpty());
 		return addr;
 	}
 
