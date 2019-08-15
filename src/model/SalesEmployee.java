@@ -28,7 +28,7 @@ public class SalesEmployee extends Employee{
 		return sales_for_period;
 	}
 
-	public void setSales_for_period(double sales_this_period) {
+	public void setSales_for_period(double sales_for_period) {
 		this.sales_for_period = sales_for_period;
 	}
 }
