@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 import java.security.*;
 
@@ -19,8 +20,6 @@ import model.User;
 
 public class Main {
 
-	public Main() {
-	}
 
 	public static void main(String args[]) {
 
@@ -38,9 +37,16 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
+			System.out.println("Input the name of the department that you would like to get the employees from.");
 			
-			Login login = new Login(mapper, sc);
-			login.verifyLogin();
+//			Login login = new Login(mapper, sc);
+//			login.verifyLogin();
+			
+			String d_name = sc.nextLine();
+			List<Employee> employees = mapper.getDepartmentEmployees(d_name);
+			for(Employee emp : employees) {
+				System.out.println(emp.getF_name());
+			}
 			
 			System.out.println("Please input your new employee id\n"); 
 			String emp_id = sc.nextLine();
