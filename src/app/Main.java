@@ -33,21 +33,36 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Welcome to the Diamond Database! Please input your query"); 
+			System.out.println("Please input your new employee id\n"); 
 			String emp_id = sc.nextLine();
+			System.out.println("Please input the address\n"); 
 			String address = sc.nextLine();
+			System.out.println("Please input the email\n"); 
 			String email = sc.nextLine();
+			System.out.println("Please input the bank account\n"); 
 			String bank_account = sc.nextLine();
+			System.out.println("Please input the sort code\n"); 
 			String sort_code = sc.nextLine();
+			System.out.println("Please input the starting salary\n"); 
 			double start_sal = Double.parseDouble(sc.nextLine());
+			System.out.println("Please input the first name\n"); 
 			String f_name = sc.nextLine();
+			System.out.println("Please input the last name\n"); 
 			String l_name = sc.nextLine();
+			System.out.println("Please input the current salary\n"); 
 			double salary = Double.parseDouble(sc.nextLine());
+			System.out.println("Please input the National Insurance Number\n"); 
 			String nin = sc.nextLine();
+			System.out.println("Is this the employee you want to insert? Yes/No \n"); 
+			System.out.println(emp_id + " " + address + " " + email + " " + bank_account + " " + sort_code + " " + start_sal + " " + f_name + " " + l_name + " " + salary + " " + nin);
+			String yes = sc.nextLine();
+			if (yes == "yes") {
 			Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin);
 			mapper.insertEmployee(e);
 			System.out.println(e.getF_name());
 			session.commit();
+			System.out.println("Employee added");
+			}
 
 		} finally {
 			session.close();
