@@ -12,6 +12,16 @@ public class Employee {
 	private double salary;
 	private String nin;
 	
+	public Employee() {
+		
+	}
+	
+	public Employee(String employee_id, String f_name, String l_name) {
+		this();
+		this.employee_id = employee_id;
+		this.f_name = f_name;
+		this.l_name = l_name;
+	}
 	
 	public String getEmployee_id() {
 		return employee_id;
