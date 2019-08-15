@@ -6,10 +6,10 @@ public class Employee {
 	private String email;
 	private String bank_account;
 	private String sort_code;
-	private double starting_salary;
+	private int starting_salary;
 	private String f_name;
 	private String l_name;
-	private double salary;
+	private int salary;
 	private String nin;
 	private String department_id;
 	
@@ -32,7 +32,7 @@ public class Employee {
 		this.l_name = l_name;
 	}
 	
-	public Employee(String employee_id, String address, String email, String bank_account, String sort_code, double starting_salary, String f_name, String l_name, double salary, String nin) {
+	public Employee(String employee_id, String address, String email, String bank_account, String sort_code, int starting_salary, String f_name, String l_name, int salary, String nin) {
 		this();
 		this.employee_id = employee_id;
 		this.address = address;
@@ -67,7 +67,7 @@ public class Employee {
 	public double getSalary() {
 		return salary;
 	}
-	public void setSalary(double salary) {
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
 	public String getNin() {
@@ -103,7 +103,7 @@ public class Employee {
 	public double getStarting_salary() {
 		return starting_salary;
 	}
-	public void setStarting_salary(double starting_salary) {
+	public void setStarting_salary(int starting_salary) {
 		this.starting_salary = starting_salary;
 	}
 	

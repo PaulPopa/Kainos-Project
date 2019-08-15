@@ -10,11 +10,8 @@ import org.apache.ibatis.annotations.Select;
 import model.Assignment;
 import model.Department;
 import model.Employee;
-<<<<<<< Updated upstream
 import model.Project;
-=======
 import model.SalesEmployee;
->>>>>>> Stashed changes
 import model.User;
 
 public interface EmployeesMapper {
@@ -40,10 +37,13 @@ public interface EmployeesMapper {
     @Select("SELECT GROUP_CONCAT(CONCAT_WS(' ', employee.f_name, employee.l_name) SEPARATOR ';') from project, employee, assignment where project.project_id = assignment.project_id and employee.employee_id = assignment.employee_id and project.project_id = #{project_id} group by project.project_id")
     String getEmployeesInProject(@Param("project_id") int projectId);
 
-	@Select("SELECT f_name, l_name FROM employee WHERE employee_id NOT IN "
-			+ "SELECT employee_id FROM salesEmployee")
+	@Select("SELECT * FROM employee WHERE employee_id NOT IN "
+			+ "(SELECT employee_id FROM salesEmployee)")
 	List<Employee> getEmployees();
 	
 	@Select("SELECT * FROM salesEmployee")
 	List<SalesEmployee> getSalesEmployees();
+	
+	@Select("SELECT * WHERE employee_id = #{employee_id}")
+	Employee getEmployeeById(@Param("employee_id") String f_name);
 }

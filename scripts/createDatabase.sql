@@ -25,7 +25,7 @@ create table employee(
 
 create table salesEmployee(
     employee_id char(8) primary key,
-    commision_rate decimal(6,3),
+    commission_rate decimal(2,2),
     sales_for_period smallint unsigned,
     foreign key (employee_id) references employee(employee_id)
 );
@@ -61,6 +61,7 @@ INSERT INTO employee VALUES ('AB123HE8', '28 Kenthouse road', 'joker@diamond.com
 INSERT INTO employee VALUES ('AB123HS7', '22 Stone road', 'jane@diamond.com', '93849258', '123256', 30000, 'Jane', 'Batman', 30000, '37GH90OHG', 'SALE');
 INSERT INTO employee VALUES ('BC123HE8', '2 Lilly road', 'ally@diamond.com', '93847584', '923456', 50000, 'Ally', 'Stone', 30000, '37XH90OGT', 'TECH');
 
+INSERT INTO salesEmployee VALUES('AB123HE8', 0.3, 400);
 
 
 
