@@ -47,4 +47,4 @@ create table assignment(
     foreign key (project_id) references project(project_id)
 );
 
-INSERT INTO employee VALUES ('
+#INSERT INTO employee VALUES ('
