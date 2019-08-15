@@ -43,12 +43,9 @@ public class Main {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
 			
-			TalentManager tm = new TalentManager(mapper, sc, session);
-			tm.selectNumberOfEmployeesPerProject();
-			System.exit(1);
-			
-			
-			
+			//TalentManager tm = new TalentManager(mapper, sc, session);
+			//tm.selectNumberOfEmployeesPerProject();
+			//System.exit(1);
 			
 			
 			//System.out.println("Input the name of the department that you would like to get the employees from.");
@@ -56,11 +53,7 @@ public class Main {
 //			Login login = new Login(mapper, sc);
 //			login.verifyLogin();
 			
-			//String d_name = sc.nextLine();
-			//List<Employee> employees = mapper.getDepartmentEmployees(d_name);
-			//for(Employee emp : employees) {
-			//	System.out.println(emp.getF_name());
-			//}
+
 //			Login login = new Login(mapper, sc);
 //			login.verifyLogin();
 			/*
@@ -107,6 +100,13 @@ public class Main {
 			mapper.insertEmployee(e);
 			session.commit();
 			System.out.println("Employee added");
+			
+			/*
+			String d_name = sc.nextLine();
+			List<Employee> employees = mapper.getDepartmentEmployees(d_name);
+			for(Employee emp : employees) {
+				System.out.println(emp.getF_name());
+			}*/
 			//}
 
 		} finally {
@@ -128,7 +128,7 @@ public class Main {
 				deptId = "SALE";
 				deptExist = true;
 				break;
-			case "techology": 
+			case "technology": 
 				deptId = "TECH";
 				deptExist = true;
 				break;
