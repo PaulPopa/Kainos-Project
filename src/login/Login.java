@@ -21,8 +21,10 @@ public class Login {
 		System.out.println("Enter your password:");
 		String password = sc.nextLine();
 	    String hashPassword = User.hashPassword(password);
+	    System.out.println(hashPassword);
 	    
 	    User user = mapper.getUser(username);
+	    System.out.println(user);
 	    boolean incorrectCredentials = true;
 	    
 	    while (incorrectCredentials == true) { 	

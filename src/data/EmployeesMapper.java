@@ -10,11 +10,9 @@ import org.apache.ibatis.annotations.Select;
 import model.Assignment;
 import model.Department;
 import model.Employee;
-<<<<<<< Updated upstream
 import model.Project;
-=======
+
 import model.SalesEmployee;
->>>>>>> Stashed changes
 import model.User;
 
 public interface EmployeesMapper {
@@ -27,6 +25,10 @@ public interface EmployeesMapper {
 	@Insert("INSERT INTO employee (employee_id, address, email, bank_account, sort_code, starting_salary, f_name, l_name, salary, nin, department_id)"
 			+ "VALUES(#{employee_id}, #{address}, #{email}, #{bank_account}, #{sort_code}, #{starting_salary}, #{f_name}, #{l_name}, #{salary}, #{nin}, #{department_id})")
 	void insertEmployee(Employee employee);
+	
+	@Insert("INSERT INTO salesEmployee (employee_id, commision_rate, sales_for_period)"
+			+ "VALUES(#{employee_id}, #{commision_rate}, #{sales_for_period}")
+	void insertSalesEmployee(SalesEmployee sales_employee);
 	
 	@Select("SELECT username, password FROM user WHERE username = #{username}")
 	User getUser(@Param("username") String username);
