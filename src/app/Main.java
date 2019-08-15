@@ -80,30 +80,35 @@ public class Main {
 				case "Sales":
 					break;
 				case "Talent": 
-					System.out.println("What would you like to do?\n"
-							+"1.Create projects\n"
-							+"2.Assign employee to a project\n"
-							+"3.Select all employees on a particular project\n"
-							+"4.Select all projects with no employees assigned\n"
-							+"5.Select all employees with no assigned projects\n"
-							+"6.Select the number of employees per specified project\n"
-							+ "Enter 1, 2, 3, 4, 5, 6\n");
-					String talent_choice = sc.nextLine();
-					switch(talent_choice) {
-					  case "1": tm.createProjects();
-					    break; 
-					  case "2": tm.assignEmployeeToProject();
-					    break;
-					  case "3": tm.selectEmployeesForProject();
-					    break;
-					  case "4": tm.selectProjectsWithNoEmployees();
-					    break;
-					  case "5": tm.selectEmployeesForProject();
-					    break;
-					  case "6": tm.selectNumberOfEmployeesPerProject();
-					    break;
-					} 
-					break;
+					boolean exit = false;
+					while(!exit) {
+						System.out.println("What would you like to do?\n"
+								+"1.Create projects\n"
+								+"2.Assign employee to a project\n"
+								+"3.Select all employees on a particular project\n"
+								+"4.Select all projects with no employees assigned\n"
+								+"5.Select all employees with no assigned projects\n"
+								+"6.Select the number of employees per specified project\n"
+								+ "Enter 1, 2, 3, 4, 5, 6\n");
+						String talent_choice = sc.nextLine();
+						switch(talent_choice) {
+						  case "1": tm.createProjects();
+						    break; 
+						  case "2": tm.assignEmployeeToProject();
+						    break;
+						  case "3": tm.selectEmployeesForProject();
+						    break;
+						  case "4": tm.selectProjectsWithNoEmployees();
+						    break;
+						  case "5": tm.selectEmployeesForProject();
+						    break;
+						  case "6": tm.selectNumberOfEmployeesPerProject();
+						    break;
+						  case "exit":
+							  exit = true;
+							  break;
+						} 
+					}
 				default:
 					System.out.println(
 							"Department not recognised, please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
