@@ -18,14 +18,7 @@ public class Main {
 	}
 
 	public static void main(String args[]) {
-		/*
-		 * Scanner sc = new Scanner(System.in);
-		 * System.out.println("Welcome to the Diamond Database! Please input your query"
-		 * ); String input = sc.nextLine();
-		 * 
-		 * switch(input) { case "hello": System.out.println("Hi there"); break; default:
-		 * System.out.println("Input not recognised"); }
-		 */
+
 		Reader reader = null;
 		try {
 			reader = Resources.getResourceAsReader("data/mybatis-config.xml");
@@ -36,16 +29,28 @@ public class Main {
 		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
 		SqlSessionFactory factory = builder.build(reader);
 		SqlSession session = factory.openSession();
-		
+
 		try {
-			System.out.println("hbye");
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
-			System.out.println("hello");
-			Employee john = mapper.getEmployee("Dave");
-			System.out.println(john.getF_name());
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Welcome to the Diamond Database! Please input your query"); 
+			String emp_id = sc.nextLine();
+			String address = sc.nextLine();
+			String email = sc.nextLine();
+			String bank_account = sc.nextLine();
+			String sort_code = sc.nextLine();
+			double start_sal = Double.parseDouble(sc.nextLine());
+			String f_name = sc.nextLine();
+			String l_name = sc.nextLine();
+			double salary = Double.parseDouble(sc.nextLine());
+			String nin = sc.nextLine();
+			Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin);
+			mapper.insertEmployee(e);
+			System.out.println(e.getF_name());
+			session.commit();
 
 		} finally {
 			session.close();
 		}
- 	}
+	}
 }

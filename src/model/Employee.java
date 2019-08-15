@@ -23,6 +23,20 @@ public class Employee {
 		this.l_name = l_name;
 	}
 	
+	public Employee(String employee_id, String address, String email, String bank_account, String sort_code, double starting_salary, String f_name, String l_name, double salary, String nin) {
+		this();
+		this.employee_id = employee_id;
+		this.address = address;
+		this.email = email;
+		this.bank_account = bank_account;
+		this.sort_code = sort_code;
+		this.starting_salary = starting_salary;
+		this.f_name = f_name;
+		this.l_name = l_name;
+		this.salary = salary;
+		this.nin = nin;
+	}
+	
 	public String getEmployee_id() {
 		return employee_id;
 	}
