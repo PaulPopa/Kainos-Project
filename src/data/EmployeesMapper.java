@@ -35,5 +35,13 @@ public interface EmployeesMapper {
 	
     @Select("SELECT GROUP_CONCAT(CONCAT_WS(' ', employee.f_name, employee.l_name) SEPARATOR ';') from project, employee, assignment where project.project_id = assignment.project_id and employee.employee_id = assignment.employee_id and project.project_id = #{project_id} group by project.project_id")
     String getEmployeesInProject(@Param("project_id") int projectId);
-
+    
+    @Select("SELECT project_id AS projectId, project_name AS projectName, leader_id as leaderId FROM project where project.project_id NOT IN (SELECT project_id from assignment)")
+    List<Project> getProjectWithNoAsignees();
+    
+    @Select("SELECT * FROM employee where employee_id NOT IN (SELECT employee_id FROM assignment)")
+    List<Employee> getEmployeesWithNoProjects();
+    
+    @Select("select COUNT(employee.employee_id) FROM project, employee, assignment where project.project_id = assignment.project_id and assignment.employee_id = employee.employee_id and project.project_id = #{project_id} GROUP BY project.project_id")
+    int getNumberOfEmployeesOnProject(@Param("project_id") int projectId);
 }

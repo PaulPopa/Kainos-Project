@@ -44,7 +44,7 @@ public class Main {
 			Scanner sc = new Scanner(System.in);
 			
 			TalentManager tm = new TalentManager(mapper, sc, session);
-			tm.selectEmployeesForProject();
+			tm.selectNumberOfEmployeesPerProject();
 			System.exit(1);
 			
 			
