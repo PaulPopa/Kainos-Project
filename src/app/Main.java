@@ -41,10 +41,7 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
-
 			TalentManager tm = new TalentManager(mapper, sc, session);
-
-
 			HR hr = new HR(mapper, sc);
 			
 			Boolean validInput = true;
@@ -85,9 +82,12 @@ public class Main {
 				case "Talent": 
 					System.out.println("What would you like to do?\n"
 							+"1.Create projects\n"
-							+"Assign employee to a project\n"
-							+"Select all employees on a particular project"
-							+ "Enter 1, 2 or 3\n");
+							+"2.Assign employee to a project\n"
+							+"3.Select all employees on a particular project\n"
+							+"4.Select all projects with no employees assigned\n"
+							+"5.Select all employees with no assigned projects\n"
+							+"6.Select the number of employees per specified project\n"
+							+ "Enter 1, 2, 3, 4, 5, 6\n");
 					String talent_choice = sc.nextLine();
 					switch(talent_choice) {
 					  case "1": tm.createProjects();
@@ -95,6 +95,12 @@ public class Main {
 					  case "2": tm.assignEmployeeToProject();
 					    break;
 					  case "3": tm.selectEmployeesForProject();
+					    break;
+					  case "4": tm.selectProjectsWithNoEmployees();
+					    break;
+					  case "5": tm.selectEmployeesForProject();
+					    break;
+					  case "6": tm.selectNumberOfEmployeesPerProject();
 					    break;
 					} 
 					break;

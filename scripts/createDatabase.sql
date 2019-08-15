@@ -18,8 +18,8 @@ create table employee(
     f_name varchar(50) not null,
     l_name varchar(50) not null,
     salary mediumint,
-    nin char(9) unique,
-    department_id char(4),
+    nin char(9),
+    department_id char(4) not null,
     foreign key (department_id) references department(department_id)
 );
 
