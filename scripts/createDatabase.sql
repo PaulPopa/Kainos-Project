@@ -13,7 +13,9 @@ create table employee(
     f_name varchar(50) not null,
     l_name varchar(50) not null,
     salary mediumint,
-    nin char(9) unique
+    nin char(9) unique,
+    department_id char(4),
+    foreign key (department_id) references department(department_id)
 );
 
 create table salesEmployee(
@@ -21,6 +23,11 @@ create table salesEmployee(
     commision_rate decimal(6,3),
     sales_for_period smallint unsigned,
     foreign key (employee_id) references employee(employee_id)
+);
+
+create table department(
+    department_id char(4) primary key,
+    d_name varchar(50) 
 );
 
 create table project(
@@ -39,3 +46,5 @@ create table assignment(
     foreign key (employee_id) references employee(employee_id),
     foreign key (project_id) references project(project_id)
 );
+
+INSERT INTO employee VALUES ('
