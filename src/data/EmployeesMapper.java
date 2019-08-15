@@ -25,6 +25,10 @@ public interface EmployeesMapper {
 			+ "VALUES(#{employee_id}, #{address}, #{email}, #{bank_account}, #{sort_code}, #{starting_salary}, #{f_name}, #{l_name}, #{salary}, #{nin}, #{department_id})")
 	void insertEmployee(Employee employee);
 	
+	@Insert("INSERT INTO salesEmployee (employee_id, commision_rate, sales_for_period)"
+			+ "VALUES(#{employee_id}, #{commision_rate}, #{sales_for_period}")
+	void insertSalesEmployee(SalesEmployee sales_employee);
+	
 	@Select("SELECT username, password FROM user WHERE username = #{username}")
 	User getUser(@Param("username") String username);
 	
@@ -36,6 +40,15 @@ public interface EmployeesMapper {
 	
     @Select("SELECT GROUP_CONCAT(CONCAT_WS(' ', employee.f_name, employee.l_name) SEPARATOR ';') from project, employee, assignment where project.project_id = assignment.project_id and employee.employee_id = assignment.employee_id and project.project_id = #{project_id} group by project.project_id")
     String getEmployeesInProject(@Param("project_id") int projectId);
+    
+    @Select("SELECT project_id AS projectId, project_name AS projectName, leader_id as leaderId FROM project where project.project_id NOT IN (SELECT project_id from assignment)")
+    List<Project> getProjectWithNoAsignees();
+    
+    @Select("SELECT * FROM employee where employee_id NOT IN (SELECT employee_id FROM assignment)")
+    List<Employee> getEmployeesWithNoProjects();
+    
+    @Select("select COUNT(employee.employee_id) FROM project, employee, assignment where project.project_id = assignment.project_id and assignment.employee_id = employee.employee_id and project.project_id = #{project_id} GROUP BY project.project_id")
+    int getNumberOfEmployeesOnProject(@Param("project_id") int projectId);
 
 	@Select("SELECT * FROM employee WHERE employee_id NOT IN "
 			+ "(SELECT employee_id FROM salesEmployee)")

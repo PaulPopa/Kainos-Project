@@ -10,7 +10,6 @@ import java.security.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,13 +18,13 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import data.EmployeesMapper;
 import display.Finance;
 import display.TalentManager;
+import display.HR;
 import login.Login;
 import model.Department;
 import model.Employee;
 import model.User;
 
 public class Main {
-
 
 	public static void main(String args[]) {
 
@@ -46,209 +45,91 @@ public class Main {
 			Finance finance = new Finance(mapper, sc, session);
 			finance.getNetPayReport();
 			System.out.println("");
-//			TalentManager tm = new TalentManager(mapper, sc, session);
-//			tm.selectEmployeesForProject();
-//			System.exit(1);
-//			
-//			
-//			
-//			
-//			
-//			//System.out.println("Input the name of the department that you would like to get the employees from.");
-//			
-////			Login login = new Login(mapper, sc);
-////			login.verifyLogin();
-//			
-//			//String d_name = sc.nextLine();
-//			//List<Employee> employees = mapper.getDepartmentEmployees(d_name);
-//			//for(Employee emp : employees) {
-//			//	System.out.println(emp.getF_name());
-//			//}
-//			//Login login = new Login(mapper, sc);
-//			//login.verifyLogin();
-//			System.out.println("Welcome to the Diamond Database for entering a new employee\n");
-//			
-//			String emp_id = enterID(sc);
-//			
-//			String f_name = enterName(sc, "f");
-//			
-//			String l_name = enterName(sc, "l");
-//			
-//			String address = enterAddress(sc);
-//			
-//			String email = enterEmail(sc);
-//			
-//			String bank_account = enterBankAcc(sc);
-//			
-//			String sort_code = enterSortCode(sc);
-//
-//			int start_sal = enterStartSal(sc);
-//
-//			int salary = enterSalary(sc);
-//			
-//			String nin = enterNin(sc);
-//			
-//			Department department = enterDept(sc);
-//			
-//			convertEmptyToNull(bank_account, sort_code, start_sal, salary, nin);
-//			
-//			System.out.println("Adding this employee to database: \n"); 
-//
-//			System.out.println(emp_id + " " + address + " " + email + " " + bank_account + " " + sort_code + " " + start_sal + " " + f_name + " " + l_name + " " + salary + " " + nin);
-//			//String yes = sc.nextLine();
-//			//if (yes == "yes") {
-//			Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin);
-//			mapper.insertEmployee(e);
-//			session.commit();
-//			System.out.println("Employee added");
-			//}
+			TalentManager tm = new TalentManager(mapper, sc, session);
+			HR hr = new HR(mapper, sc);
+
+			Boolean validInput = true;
+			String department;
+			do {
+				System.out.println("Welcome to the Diamond Database\n" + "What department are you in?"
+						+ " Please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
+				department = sc.nextLine();
+				switch (department) {
+				case "HR":
+					System.out.println(
+							"What would you like to do?\n" + "1.Create new Employee\n" + "2.Create new SalesEmployee\n"
+									+ "3.Get Employees for Department\n" + "Enter 1, 2 or 3\n");
+					String hr_choice = sc.nextLine();
+					switch (hr_choice) {
+					case "1":
+						hr.createEmployee();
+						session.commit();
+						System.out.println("Employee added");
+						break;
+					case "2":
+						hr.createSales();
+						session.commit();
+						System.out.println("Sales Employee added");
+						break;
+					case "3":
+						hr.getDepEmployee();
+						break;
+					default:
+						System.out.println("Choice not recognised, please enter numbers 1, 2 or 3");
+					}
+					break;
+				case "Finance":
+					
+					break;
+				case "Sales":
+					break;
+				case "Talent":
+					boolean exit = false;
+					while (!exit) {
+						System.out.println("What would you like to do?\n" + "1.Create projects\n"
+								+ "2.Assign employee to a project\n"
+								+ "3.Select all employees on a particular project\n"
+								+ "4.Select all projects with no employees assigned\n"
+								+ "5.Select all employees with no assigned projects\n"
+								+ "6.Select the number of employees per specified project\n"
+								+ "Enter 1, 2, 3, 4, 5, 6 or exit\n");
+						String talent_choice = sc.nextLine();
+						switch (talent_choice) {
+						case "1":
+							tm.createProjects();
+							break;
+						case "2":
+							tm.assignEmployeeToProject();
+							break;
+						case "3":
+							tm.selectEmployeesForProject();
+							break;
+						case "4":
+							tm.selectProjectsWithNoEmployees();
+							break;
+						case "5":
+							tm.selectEmployeesForProject();
+							break;
+						case "6":
+							tm.selectNumberOfEmployeesPerProject();
+							break;
+						case "exit":
+							exit = true;
+							break;
+						}
+					}
+				default:
+					System.out.println(
+							"Department not recognised, please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
+					validInput = false;
+					break;
+				}
+			} while (!validInput && !department.equals("exit"));
 
 		} finally {
+
 			session.close();
 		}
+
 	}
 }
-
-//	}
-//	private static Department enterDept(Scanner sc) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	private static void convertEmptyToNull(String bank_account, String sort_code, Double start_sal, Double salary,
-//			String nin) {
-//		if(bank_account == "")
-//			bank_account = null;
-//		if(sort_code == "")
-//			sort_code = null;
-//		if(start_sal == 0)
-//			start_sal = null;
-//		if(salary == 0)
-//			salary = null;
-//		if(nin == "")
-//			nin = null;
-//		
-//	}
-//	private static String enterNin(Scanner sc) {
-//		String nin;
-//		boolean con = false;
-//		System.out.println("Please input your employee's National Insurance Number (can be skipped and added later\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please input National Insurance Number again (must be correctly formated)\n"); 
-//			nin = sc.nextLine(); 
-//			con = true;
-//		} while (!nin.matches("^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{0,1}$"));
-//		return nin;
-//	}
-//
-//	private static double enterSalary(Scanner sc) {
-//		String sal;
-//		boolean con = false;
-//		System.out.println("Please input your employee's current salary (can be skipped and added later)\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter current salary again\n"); 
-//			sal = sc.nextLine(); 
-//			con = true;
-//			if (sal.isEmpty())
-//					sal = "0";
-//		} while (sal.matches(".*[a-zA-Z]+.*") || Double.parseDouble(sal) < 0);
-//		return Double.parseDouble(sal);
-//	}
-//
-//	private static String enterName(Scanner sc, String type) {
-//		String name;
-//		boolean con = false;
-//		if(type == "f") 
-//			System.out.println("Please input your employee's first name");
-//		else System.out.println("Please input your employee's last name");
-//		do {
-//			if (con && type =="f") System.out.println("Invalid input. Please enter first name again (50 character limit)");
-//			else {
-//				if (con) System.out.println("Invalid input. Please enter last name again (50 character limit)\n"); 
-//			}
-//			name = sc.nextLine(); 
-//			con = true;
-//		} while (name.matches(".*[0-9]+.*") || name.length() > 50);
-//		return name;
-//	}
-//
-//	private static double enterStartSal(Scanner sc) {
-//		String startsal;
-//		boolean con = false;
-//		System.out.println("Please input your employee's initial starting salary (can be skipped and added later)\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter starting salary again\n"); 
-//			startsal = sc.nextLine(); 
-//			con = true;
-//			if (startsal.isEmpty())
-//				startsal = "0";
-//		} while (startsal.matches(".*[a-zA-Z]+.*") || Double.parseDouble(startsal) < 0);
-//		return Double.parseDouble(startsal);
-//	}
-//
-//	private static String enterSortCode(Scanner sc) {
-//		String sortcode;
-//		boolean con = false;
-//		System.out.println("Please input your employee's sort code (6 digits - can be skipped and added later)\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter sort code again (must be 6 digits)\n"); 
-//			sortcode = sc.nextLine(); 
-//			sortcode = sortcode.replace("-", "");
-//			con = true;
-//		} while (sortcode.length() != 6 || sortcode.matches(".*[a-zA-Z]+.*"));
-//		return sortcode;
-//	}
-//
-//	private static String enterBankAcc(Scanner sc) {
-//		String bankacc;
-//		boolean con = false;
-//		System.out.println("Please input your employee's bank account (8 digits - can be skipped and added later)\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter bank account again (must be 8 digits)\n"); 
-//			bankacc = sc.nextLine();
-//			con = true;
-//		} while ((bankacc.length() != 8 || bankacc.length() != 0) && bankacc.matches(".*[a-zA-Z]+.*"));
-//		return bankacc;
-//	}
-////
-//	private static String enterEmail(Scanner sc) {
-//		String email;
-//		boolean con = false;
-//		System.out.println("Please input your employee's email address\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter email address again (must be less than 50 characters)\n"); 
-//			email = sc.nextLine(); 
-//			con = true;
-//		} while (!isValid(email));
-//		return email;
-//	}
-//
-//	private static String enterAddress(Scanner sc) {
-//		String addr;
-//		boolean con = false;
-//		System.out.println("Please input your employee's address\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter address again (must be less than 50 characters)\n"); 
-//			addr = sc.nextLine(); 
-//			con = true;
-//		} while (addr.length() > 50);
-//		return addr;
-//	}
-//
-//	private static String enterID(Scanner sc) {
-//		String emp_id;
-//		boolean con = false;
-//		System.out.println("Please input your new employee's id (8 characters)\n"); 
-//		do {
-//			if (con) System.out.println("Invalid input. Please enter employee id again (must be 8 characters)\n"); 
-//			emp_id = sc.nextLine(); 
-//			con = true;
-//		} while (emp_id.length() != 8);
-//		return emp_id;
-//		
-//	}
-//	
-//	   static boolean isValid(String email) {
-//		      String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-//		      return email.matches(regex);
-//		   }
-//}

@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.util.Scanner;
 
 import org.apache.ibatis.session.SqlSession;
+import java.util.List;
 
 import data.EmployeesMapper;
 import model.Assignment;
+import model.Employee;
 import model.Project;
 
 public class TalentManager {
@@ -19,6 +21,34 @@ public class TalentManager {
 		this.mapper = mapper;
 		this.sc = sc;
 		this.session = session;
+	}
+	
+	public void selectNumberOfEmployeesPerProject() {
+		System.out.println("Upon entering a project id, a number representing total employees will be displayed");
+		int projectId = enterProjectId(sc);
+		
+		int count = mapper.getNumberOfEmployeesOnProject(projectId);
+		System.out.println("For project with id: " + projectId + " there are " + count + " employees assigned");
+	}
+	
+	public void selectProjectsWithNoEmployees() {
+		System.out.println("All the projects with no employees assigned:");
+		List<Project> projects = mapper.getProjectWithNoAsignees();
+		for (Project project : projects) {
+			System.out.println("Project id: " + project.getProjectId() + 
+					"; Project name: " + project.getProjectName() + "; Project leader: " + project.getLeaderId());
+		}
+	}
+	
+	public void selectEmployeesWithNoProjects() {
+		System.out.println("All employees that haven't been assigned to a project");
+		List<Employee> employees = mapper.getEmployeesWithNoProjects();
+		if (employees.size() == 0) {
+			System.out.println("There are no employees that dont have an assigned project");
+		}
+		for (Employee emp : employees) {
+			System.out.println("Employee id: " + emp.getEmployee_id() + "; Employee Name: " + emp.getF_name() + " " + emp.getL_name());
+		}
 	}
 	
 	public void selectEmployeesForProject() {

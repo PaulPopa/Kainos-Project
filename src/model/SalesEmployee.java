@@ -7,6 +7,13 @@ public class SalesEmployee extends Employee{
 	
 	public SalesEmployee() {
 	}
+	
+	public SalesEmployee(String emp_id, double com_rate, double sfp) {
+		this();
+		this.employee_id = emp_id;
+		this.commision_rate = com_rate;
+		this.sales_for_period = sfp;
+	}
 
 	public String getEmployee_id() {
 		return employee_id;
