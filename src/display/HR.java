@@ -3,6 +3,8 @@ package display;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.ibatis.exceptions.PersistenceException;
+
 import data.EmployeesMapper;
 import model.Department;
 import model.Employee;
@@ -35,8 +37,9 @@ public class HR {
 	public void createEmployee() {
 		System.out.println("Welcome to the Diamond Database for entering a new employee\n");
 		
+		try {
 		String emp_id = enterID(sc);
-		
+
 		String f_name = enterName(sc, "f");
 		
 		String l_name = enterName(sc, "l");
@@ -66,7 +69,6 @@ public class HR {
 		//if (yes == "yes") {
 		Employee e = new Employee(emp_id, address, email, bank_account, sort_code, start_sal, f_name, l_name, salary, nin, department);
 		mapper.insertEmployee(e);
-		
 		/*
 		String d_name = sc.nextLine();
 		List<Employee> employees = mapper.getDepartmentEmployees(d_name);
@@ -74,8 +76,10 @@ public class HR {
 			System.out.println(emp.getF_name());
 		}*/
 		//}
-		mapper.insertEmployee(e);
 		//}
+		} catch(PersistenceException e) {
+		System.out.println("This user ID is already in the database. Please enter details again");
+		}  
 	}
 	
 	private static double enterSalesForPeriod(Scanner sc) {
