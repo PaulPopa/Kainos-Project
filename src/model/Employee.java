@@ -60,7 +60,7 @@ public class Employee {
 	public double getSalary() {
 		return salary;
 	}
-	public void setSalary(double salary) {
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
 	public String getNin() {
@@ -96,7 +96,7 @@ public class Employee {
 	public double getStarting_salary() {
 		return starting_salary;
 	}
-	public void setStarting_salary(double starting_salary) {
+	public void setStarting_salary(int starting_salary) {
 		this.starting_salary = starting_salary;
 	}
 	public String getDepartment_id() {

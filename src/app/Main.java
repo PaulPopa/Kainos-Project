@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import data.EmployeesMapper;
+import display.Finance;
 import display.TalentManager;
 import display.HR;
 import login.Login;
@@ -41,32 +42,34 @@ public class Main {
 		try {
 			EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
 			Scanner sc = new Scanner(System.in);
+			Finance finance = new Finance(mapper, sc, session);
+			finance.getNetPayReport();
+			System.out.println("");
 			TalentManager tm = new TalentManager(mapper, sc, session);
 			HR hr = new HR(mapper, sc);
-			
+
 			Boolean validInput = true;
 			String department;
 			do {
-				System.out.println("Welcome to the Diamond Database\n" + "What department are you in?" + " Please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
+				System.out.println("Welcome to the Diamond Database\n" + "What department are you in?"
+						+ " Please enter, \"HR\", \"Finance\", \"Sales\", \"Talent\"");
 				department = sc.nextLine();
 				switch (department) {
 				case "HR":
-					System.out.println("What would you like to do?\n" 
-				            + "1.Create new Employee\n"
-							+ "2.Create new SalesEmployee\n" 
-							+ "3.Get Employees for Department\n"
-							+ "Enter 1, 2 or 3\n");
+					System.out.println(
+							"What would you like to do?\n" + "1.Create new Employee\n" + "2.Create new SalesEmployee\n"
+									+ "3.Get Employees for Department\n" + "Enter 1, 2 or 3\n");
 					String hr_choice = sc.nextLine();
 					switch (hr_choice) {
-					case "1": 
+					case "1":
 						hr.createEmployee();
 						session.commit();
-					    System.out.println("Employee added");
-												break;
+						System.out.println("Employee added");
+						break;
 					case "2":
 						hr.createSales();
 						session.commit();
-						System.out.println("Sales Employee added");	
+						System.out.println("Sales Employee added");
 						break;
 					case "3":
 						hr.getDepEmployee();
@@ -76,38 +79,44 @@ public class Main {
 					}
 					break;
 				case "Finance":
+					
 					break;
 				case "Sales":
 					break;
-				case "Talent": 
+				case "Talent":
 					boolean exit = false;
-					while(!exit) {
-						System.out.println("What would you like to do?\n"
-								+"1.Create projects\n"
-								+"2.Assign employee to a project\n"
-								+"3.Select all employees on a particular project\n"
-								+"4.Select all projects with no employees assigned\n"
-								+"5.Select all employees with no assigned projects\n"
-								+"6.Select the number of employees per specified project\n"
+					while (!exit) {
+						System.out.println("What would you like to do?\n" + "1.Create projects\n"
+								+ "2.Assign employee to a project\n"
+								+ "3.Select all employees on a particular project\n"
+								+ "4.Select all projects with no employees assigned\n"
+								+ "5.Select all employees with no assigned projects\n"
+								+ "6.Select the number of employees per specified project\n"
 								+ "Enter 1, 2, 3, 4, 5, 6 or exit\n");
 						String talent_choice = sc.nextLine();
-						switch(talent_choice) {
-						  case "1": tm.createProjects();
-						    break; 
-						  case "2": tm.assignEmployeeToProject();
-						    break;
-						  case "3": tm.selectEmployeesForProject();
-						    break;
-						  case "4": tm.selectProjectsWithNoEmployees();
-						    break;
-						  case "5": tm.selectEmployeesForProject();
-						    break;
-						  case "6": tm.selectNumberOfEmployeesPerProject();
-						    break;
-						  case "exit":
-							  exit = true;
-							  break;
-						} 
+						switch (talent_choice) {
+						case "1":
+							tm.createProjects();
+							break;
+						case "2":
+							tm.assignEmployeeToProject();
+							break;
+						case "3":
+							tm.selectEmployeesForProject();
+							break;
+						case "4":
+							tm.selectProjectsWithNoEmployees();
+							break;
+						case "5":
+							tm.selectEmployeesForProject();
+							break;
+						case "6":
+							tm.selectNumberOfEmployeesPerProject();
+							break;
+						case "exit":
+							exit = true;
+							break;
+						}
 					}
 				default:
 					System.out.println(
@@ -115,10 +124,12 @@ public class Main {
 					validInput = false;
 					break;
 				}
-			}while (!validInput &&  !department.equals("exit") );
+			} while (!validInput && !department.equals("exit"));
 
-		}finally {
+		} finally {
 
-		session.close();}
+			session.close();
+		}
 
-}}
+	}
+}
